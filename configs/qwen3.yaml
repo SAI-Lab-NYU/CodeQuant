@@ -1,0 +1,41 @@
+accelerator:
+  device: "cuda"
+
+path:
+  offline_data_path: "./data/offline"
+  smooth_data_path: "./data/smooth"
+  rotation_data_path: "./data/rotation"
+  cluster_data_path: "./data/clustering"
+
+model:
+  model_name: "Qwen/Qwen3-30B-A3B"
+
+calibration:
+  dataset_name: "Self-GRIT/wikitext-2-raw-v1-preprocessed"
+
+common_setting:
+  weight_group_size: -1
+  input_group_size: -1
+  cluster_num: 16
+  activation_quantization_bit: 8
+
+cluster:
+  permutation: False
+  max_sample: 512
+  batch_size: 32
+  max_length: 256
+  epochs: 4
+  fine_tune_lr: 0.0001
+
+rotation:
+  max_sample: 512
+  batch_size: 16
+  max_length: 256
+  epochs: 4
+  fine_tune_lr: 0.0001
+
+eval:
+  activation_quantization_bit: 8
+  weight_quantization_bit: 4
+  tasks: "piqa,hellaswag,arc_easy,arc_challenge,mmlu,winogrande"
+  ppls: ""allenai/c4,Self-GRIT/wikitext-2-raw-v1-preprocessed"

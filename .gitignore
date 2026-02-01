@@ -1,0 +1,16 @@
+.idea
+.DS_Store
+
+data
+log
+graph
+sbatch
+
+/*.py
+*.ipynb
+*.txt
+*.pyc
+*.safetensors
+*.pt
+*.csv
+*.pkl

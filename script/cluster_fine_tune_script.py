@@ -13,7 +13,13 @@ from tqdm import tqdm
 from torch.utils.data import DataLoader
 from transformers import AutoProcessor, AutoTokenizer
 
-from cluster.ClusterLinear import ClusterLinear, ClusterLinear_deepseekGate
+from cluster.ClusterLinear import ClusterLinear
+try:
+    from cluster.ClusterLinear import ClusterLinear_deepseekGate
+    DEEPSEEK_AVAILABLE = True
+except ImportError:
+    ClusterLinear_deepseekGate = None
+    DEEPSEEK_AVAILABLE = False
 from cluster.ClusterMoE import ClusterMoE, ClusterMoE_deepseek
 from utils.dataset_utils import CalibrationDataset
 from utils.rotation_utils import fuse_rotation, fuse_weight, load_or_create_R1
@@ -115,7 +121,7 @@ def replace_linear(model: nn.Module,
         pre_compute_cluster = True
         cluster_weight, centroids, assignments = pre_codebooks
 
-    if model_type == "deepseek":
+    if model_type == "deepseek" and DEEPSEEK_AVAILABLE:
         layers = model.model.layers
         for i, layer in enumerate(layers):
             if i == 0:

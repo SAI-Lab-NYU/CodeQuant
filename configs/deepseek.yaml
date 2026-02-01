@@ -18,7 +18,7 @@ common_setting:
   weight_group_size: -1
   input_group_size: -1
   cluster_num: 16
-  activation_quantization_bit: 8
+  activation_quantization_bit: 4
 
 cluster:
   max_sample: 512
@@ -37,7 +37,7 @@ rotation:
   fine_tune_lr: 0.0001
 
 eval:
-  activation_quantization_bit: 8
+  activation_quantization_bit: 4
   weight_quantization_bit: 4
   tasks: "piqa,hellaswag,arc_easy,arc_challenge,mmlu,winogrande"
   ppls: "allenai/c4,Self-GRIT/wikitext-2-raw-v1-preprocessed"

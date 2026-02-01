@@ -87,7 +87,7 @@ tokenizers==0.22.2
 torch==2.10.0
 torchvision==0.25.0
 tqdm==4.67.1
-transformers==5.0.0
+transformers==4.45
 triton==3.6.0
 trl==0.27.1
 typepy==1.3.4

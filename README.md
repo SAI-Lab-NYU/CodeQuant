@@ -1,5 +1,5 @@
-# CodeQuant: Unified Clustering and Quantization for Enhanced Outlier Smoothing in Low-Precision Mixture-of-Experts
-<p>
+# CodeQuant: Unified Clustering and Quantization for Enhanced Outlier Smoothing in Low-Precision Mixture-of-Experts (ICLR, 2026)
+<p align="center">
     <a href="https://openreview.net/forum?id=ATpchFiBQi">OpenReview</a>
 </p>
 

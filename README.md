@@ -1,4 +1,7 @@
 # CodeQuant: Unified Clustering and Quantization for Enhanced Outlier Smoothing in Low-Precision Mixture-of-Experts
+<p>
+    <a href="https://openreview.net/forum?id=ATpchFiBQi">OpenReview</a>
+</p>
 
 ## 📖Introduction
 CodeQuant is a codebook-based quantization framework for efficient low-precision deployment of Mixture-of-Experts (MoE) large language models. It addresses the key challenge of severe activation outliers that degrade accuracy under 4-bit quantization by combining learnable activation smoothing with outlier-aware weight clustering. CodeQuant introduces activation-oriented rotations to relocate activation outliers into the weight space, followed by permutation-invariant weight grouping and adaptive centroid finetuning to minimize clustering error. The quantized model is deployed using a specialized lookup-table (LUT) kernel, enabling fast inference with no runtime overhead. Across multiple MoE models, CodeQuant reduces memory footprint, accelerates inference, and preserves model accuracy under extreme low-bit settings.

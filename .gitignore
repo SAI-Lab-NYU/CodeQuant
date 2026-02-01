@@ -8,7 +8,6 @@ sbatch
 
 /*.py
 *.ipynb
-*.txt
 *.pyc
 *.safetensors
 *.pt

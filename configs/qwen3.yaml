@@ -38,4 +38,4 @@ eval:
   activation_quantization_bit: 8
   weight_quantization_bit: 4
   tasks: "piqa,hellaswag,arc_easy,arc_challenge,mmlu,winogrande"
-  ppls: ""allenai/c4,Self-GRIT/wikitext-2-raw-v1-preprocessed"
+  ppls: "allenai/c4,Self-GRIT/wikitext-2-raw-v1-preprocessed"

@@ -2,8 +2,6 @@ accelerator:
   device: "cuda"
 
 path:
-  offline_data_path: "./data/offline"
-  smooth_data_path: "./data/smooth"
   rotation_data_path: "./data/rotation"
   cluster_data_path: "./data/clustering"
 

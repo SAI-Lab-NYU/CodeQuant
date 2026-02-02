@@ -2,14 +2,11 @@ accelerator:
   device: "cuda"
 
 path:
-  offline_data_path: "./data/offline"
-  smooth_data_path: ".b/data/smooth"
   rotation_data_path: "./data/rotation"
   cluster_data_path: "./data/clustering"
 
 model:
   model_name: "deepseek-ai/DeepSeek-V2-Lite"
-  model_params: "eager"
 
 calibration:
   dataset_name: "Self-GRIT/wikitext-2-raw-v1-preprocessed"

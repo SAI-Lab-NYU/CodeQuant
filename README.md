@@ -1,14 +1,24 @@
-# CodeQuant: Unified Clustering and Quantization for Enhanced Outlier Smoothing in Low-Precision Mixture-of-Experts (ICLR, 2026)
+# CodeQuant: Unified Clustering and Quantization for Enhanced Outlier Smoothing in Low-Precision Mixture-of-Experts
+
+<p align="center" style="font-size: 18px;">
+    International Conference on Learning Representations (ICLR), 2026
+</p>
 <p align="center">
-    <a href="https://openreview.net/forum?id=ATpchFiBQi">OpenReview</a>
+    <a href="https://openreview.net/forum?id=ATpchFiBQi">📄OpenReview</a>
 </p>
 
-## 📖Introduction
-CodeQuant is a codebook-based quantization framework for efficient low-precision deployment of Mixture-of-Experts (MoE) large language models. It addresses the key challenge of severe activation outliers that degrade accuracy under 4-bit quantization by combining learnable activation smoothing with outlier-aware weight clustering. CodeQuant introduces activation-oriented rotations to relocate activation outliers into the weight space, followed by permutation-invariant weight grouping and adaptive centroid finetuning to minimize clustering error. The quantized model is deployed using a specialized lookup-table (LUT) kernel, enabling fast inference with no runtime overhead. Across multiple MoE models, CodeQuant reduces memory footprint, accelerates inference, and preserves model accuracy under extreme low-bit settings.
+This repository provides the official implementation of <strong>CodeQuant</strong>, a unified clustering and quantization framework for Mixture-of-Experts (MoE) Large Language Models (LLMs), addressing activation outliers with fine-tuned rotation and robust clustering method, enabling efficient low-precision deployment.
 ![CodeQuant Overview](asset/codequant_overall.png)
 
-## 🔧How to use
-### Environment
+## ⭐️Highlights
+- Unified Rotation and Clustering framework for MoE LLMs low-precision deployment with carefully designed fine-tuning objectives.
+- Fully offline quantization with no on-the-fly computation overhead. Achieving strong performance on language modeling, zero-shot QA tasks, and few-show mathematical reasoning.
+- Lookup-table (LUT) based system for efficient deployment and inference, achieving 4.15x speedup on CPU, and average 2.63x speedup on A100 GPU (simulator).
+
+## 🔧Requirements
+Our implementation requires different [transformers](https://github.com/huggingface/transformers) versions for different models.
+The DeepSeek model we used is [DeepSeek-V2-Lite](https://huggingface.co/deepseek-ai/DeepSeek-V2-Lite) which requires lower version transformers. We used transformers==4.45.0. 
+The best practice is to install the required packages separately. For DeepSeek-V2-Lite model, use the `requirements-deepseek.txt`. For other models (e.g. [Qwen3-30B-A3B](https://huggingface.co/Qwen/Qwen3-30B-A3B), [Mixtral 8x7B](https://huggingface.co/mistralai/Mixtral-8x7B-Instruct-v0.1)), use the `requirements.txt`.
 - DeepSeek-V2-Lite Model:
 ````shell
 pip install -r requirements-deepseek.txt
@@ -17,68 +27,60 @@ pip install -r requirements-deepseek.txt
 ````shell
 pip install -r requirements.txt
 ````
+
+## 👨‍💻Pipeline
 ### Config:
-- Add new: model_name.yaml and save under configs/
-- Modify:
-````yaml
-accelerator:
-  device: "cuda" 
+Our framework configurations are managed using `yaml` files stored under `configs/` directory. 
+You can use our examples or create your own configurations. To create your own configuration, you can follow the example's structure and 
+modify the following configuration parameters:
+- accelerator:
+  * `device`: The accelerator to use. If you use GPU, set it to `cuda`.
+- path:
+  * `rotation_data_path`: The path to save fine-tuned rotation matrix. We prefer the absolute path.
+  * `cluster_data_path`: The path to save clustering results. We prefer the absolute path.
+- model:
+  * `model_name`: The huggingface model path. E.g. `Qwen/Qwen3-30B-A3B`.
+- calibration:
+  * `dataset_name`: The calibration dataset name. 
+- common_setting:
+  * `weight_group_size`: The group size for weight clustering. Set it to `-1` for embedding-wise setup. 
+  * `input_group_size`: The group size for activation quantization. Set it to `-1` for embedding-wise setup.
+- cluster:
+  * `permutation`: The switch for POG. Set it to `True` for POG.
+  * `max_sample`: The number of calibration samples to use for clustering fine-tune (ACCF).
+  * `batch_size`: The batch size for clustering fine-tune (ACCF).
+  * `max_length`: The maximum length of input tokens. Set it to a smaller value to save memory.
+  * `epochs`: The number of epochs for clustering fine-tune (ACCF).
+  * `fine_tune_lr`: The learning rate for clustering fine-tune (ACCF). Don't use scientific notation here (e.g. `1e-3`). Use decimal notation instead (e.g. `0.001`).
+- rotation:
+  * `max_sample`: The number of calibration samples to use for rotation fine-tune (AOS).
+  * `batch_size`: The batch size for rotation fine-tune (AOS).
+  * `max_length`: The maximum length of input tokens. Set it to a smaller value to save memory.
+  * `epochs`: The number of epochs for rotation fine-tune (AOS).
+  * `fine_tune_lr`: The learning rate for rotation fine-tune (AOS). Don't use scientific notation here (e.g. `1e-3`). Use decimal notation instead (e.g. `0.001`).
+- eval:
+  * `activation_quantization_bit`: The bitwidth for activation quantization.
+  * `weight_quantization_bit`: The bitwidth for weight quantization. This is only used for benchmark evaluation. If you evaluate a clustered model, this parameter will not be used.
+  * `tasks`: The evaluation tasks. Use the format `task1,task2,...,taskN` where each task following naming convention of lm-eval
+  * `ppls`: The perplexity tasks. Use the format `ppl1,ppl2,...,pplN` where each task is a huggingface dataset path.
 
-path: # default saving path
-  offline_data_path: "./data/offline" 
-  smooth_data_path: "./data/smooth"
-  rotation_data_path: "./data/rotation"
-  cluster_data_path: "./data/clustering"
-
-model:
-  model_name: # huggingface model path
-
-calibration:
-  dataset_name: # calibration dataset name (huggingface dataset path)
-
-common_setting:
-  weight_group_size: # -1 for embedding-wise setup, number (e.g. 1024) for block-wise setup
-  input_group_size: # -1 for embedding-wise setup, number (e.g. 1024) for block-wise setup
-  cluster_num: # follow k=2^b where b is the target bitwidth
-  activation_quantization_bit: # activation quantization bitwidth
-
-cluster: # ACCF
-  permutation: # POG enabled or not
-  max_sample: # number of calibration samples to use
-  batch_size: # batch size for clustering fine-tune
-  max_length: # max sequence length for clustering fine-tune
-  epochs: # clustering fine-tune epochs
-  fine_tune_lr: # clustering fine-tune learning rate
-
-rotation: # AOS
-  max_sample: # number of calibration samples to use for rotation fine-tune
-  batch_size: # batch size for rotation fine-tune
-  max_length: # max sequence length for rotation fine-tune
-  epochs: # rotation fine-tune epochs
-  fine_tune_lr: # rotation fine-tune learning rate
-
-eval:
-  activation_quantization_bit:  # activation quantization bitwidth
-  weight_quantization_bit: # weight quantization bitwidth, only for benchmark evaluation
-  tasks: # evaluation tasks, "task1,task2,...,taskN", each task following naming convention of lm-eval
-  ppls: # perplexity tasks, "ppl1,ppl2,...,pplN", each task is a huggingface dataset path
-````
-### Pipeline:
-- Step1: run AOS:
+### Run:
+Our scrips are stored under `script/` directory. You can follow the following steps to replicate our results.
+- Step 1: run AOS to fine-tune the rotation matrix:
 ````shell
 cd script/
 python rotation_fine_tune_script.py --config model_name.yaml
 ````
-- Step2: run ACCF:
+- Step 2: run ACCF (set `permutation=True` and `weight_group_size` to some number to enable POG):
 ````shell
 # cd script/
 python cluster_fine_tune_script.py --config model_name.yaml
 ````
-- Step3: evaluate:
+- Step 3: evaluate, we will use fake quantization for evaluation:
 ````shell
 # cd script/
-python evaluation_script.py --config model_name.yaml # fake quantization will be used for evaluation
+python evaluation_script.py --config model_name.yaml
 ````
 
-## 📄Citation
-will be publised soon.
+## 📚Citation
+it will be published soon.

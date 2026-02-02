@@ -7,13 +7,13 @@
     <a href="https://openreview.net/forum?id=ATpchFiBQi">📄OpenReview</a>
 </p>
 
-This repository provides the official implementation of <strong>CodeQuant</strong>, a unified clustering and quantization framework for Mixture-of-Experts (MoE) Large Language Models (LLMs), addressing activation outliers with fine-tuned rotation and robust clustering method, enabling efficient low-precision deployment.
+This repository provides the official implementation of <strong>CodeQuant</strong>, a unified clustering and quantization framework for <strong>Mixture-of-Experts (MoE) Large Language Models (LLMs)</strong>, addressing activation outliers with fine-tuned rotation and robust clustering method, enabling efficient low-precision deployment.
 ![CodeQuant Overview](asset/codequant_overall.png)
 
 ## ⭐️Highlights
-- Unified Rotation and Clustering framework for MoE LLMs low-precision deployment with carefully designed fine-tuning objectives.
-- Fully offline quantization with no on-the-fly computation overhead. Achieving strong performance on language modeling, zero-shot QA tasks, and few-show mathematical reasoning.
-- Lookup-table (LUT) based system for efficient deployment and inference, achieving 4.15x speedup on CPU, and average 2.63x speedup on A100 GPU (simulator).
+- Unified Rotation and Clustering framework for MoE LLMs low-precision deployment with carefully designed <strong>MoE-specific fine-tuning objectives</strong>.
+- Fully offline quantization with <strong>no on-the-fly computation overhead</strong>. Achieving strong performance on language modeling, zero-shot QA tasks, and few-show mathematical reasoning.
+- Lookup-table (LUT) based system for efficient deployment and inference, achieving <strong>4.15x speedup on CPU, and average 2.63x speedup on A100 GPU (simulator)</strong>.
 
 ## 🔧Requirements
 Our implementation requires different [transformers](https://github.com/huggingface/transformers) versions for different models.

@@ -44,7 +44,7 @@ python rotation_fine_tune_script.py --config model_name.yaml
 # cd script/
 python cluster_fine_tune_script.py --config model_name.yaml
 ````
-- Step 3: evaluate, we will use fake quantization for evaluation:
+- Step 3: evaluate, we will use fake quantization for evaluation (for downstream tasks and math reasoning, we use the third-party evaluation tool [lm-eval](https://github.com/EleutherAI/lm-evaluation-harness)):
 ````shell
 # cd script/
 python evaluation_script.py --config model_name.yaml

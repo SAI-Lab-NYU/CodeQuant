@@ -81,7 +81,7 @@ modify the following configuration parameters:
 - eval:
   * `activation_quantization_bit`: The bitwidth for activation quantization.
   * `weight_quantization_bit`: The bitwidth for weight quantization. This is only used for benchmark evaluation. If you evaluate a clustered model, this parameter will not be used.
-  * `tasks`: The evaluation tasks. Use the format `task1,task2,...,taskN` where each task following naming convention of lm-eval
+  * `tasks`: The evaluation tasks. Use the format `task1,task2,...,taskN` where each task following naming convention of [lm-eval](https://github.com/EleutherAI/lm-evaluation-harness).
   * `ppls`: The perplexity tasks. Use the format `ppl1,ppl2,...,pplN` where each task is a huggingface dataset path.
 
 

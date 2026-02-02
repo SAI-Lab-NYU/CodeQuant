@@ -29,8 +29,28 @@ pip install -r requirements.txt
 ````
 
 ## 👨‍💻Pipeline
-### Config:
-Our framework configurations are managed using `yaml` files stored under `configs/` directory. 
+In our framework, we decouple the configuration and the pipeline. We have provided a set of examples for different models under `configs/` directory.
+You can use our examples first to have a quick start of the pipeline. Then you can modify the configuration according to your needs.
+### 🎯Run:
+Our scrips are stored under `script/` directory. 
+You can follow the following steps to reproduce our results.
+- Step 1: run AOS to fine-tune the rotation matrix:
+````shell
+cd script/
+python rotation_fine_tune_script.py --config model_name.yaml
+````
+- Step 2: run ACCF (set `permutation=True` and `weight_group_size` to some number to enable POG):
+````shell
+# cd script/
+python cluster_fine_tune_script.py --config model_name.yaml
+````
+- Step 3: evaluate, we will use fake quantization for evaluation:
+````shell
+# cd script/
+python evaluation_script.py --config model_name.yaml
+````
+
+### 🔍Config:
 You can use our examples or create your own configurations. To create your own configuration, you can follow the example's structure and 
 modify the following configuration parameters:
 - accelerator:
@@ -64,23 +84,6 @@ modify the following configuration parameters:
   * `tasks`: The evaluation tasks. Use the format `task1,task2,...,taskN` where each task following naming convention of lm-eval
   * `ppls`: The perplexity tasks. Use the format `ppl1,ppl2,...,pplN` where each task is a huggingface dataset path.
 
-### Run:
-Our scrips are stored under `script/` directory. You can follow the following steps to replicate our results.
-- Step 1: run AOS to fine-tune the rotation matrix:
-````shell
-cd script/
-python rotation_fine_tune_script.py --config model_name.yaml
-````
-- Step 2: run ACCF (set `permutation=True` and `weight_group_size` to some number to enable POG):
-````shell
-# cd script/
-python cluster_fine_tune_script.py --config model_name.yaml
-````
-- Step 3: evaluate, we will use fake quantization for evaluation:
-````shell
-# cd script/
-python evaluation_script.py --config model_name.yaml
-````
 
 ## 📚Citation
 it will be published soon.

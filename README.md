@@ -1,6 +1,6 @@
 # CodeQuant: Unified Clustering and Quantization for Enhanced Outlier Smoothing in Low-Precision Mixture-of-Experts
 
-<p align="center" style="font-size: 18px;">
+<p align="center" style="font-size: 24px;">
     International Conference on Learning Representations (ICLR), 2026
 </p>
 <p align="center">

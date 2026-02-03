@@ -87,3 +87,8 @@ modify the following configuration parameters:
 
 ## 📚Citation
 it will be published soon.
+
+## 🤝Contributing
+We thank the community for sharing their projects. Our project builds on top of the existing works:
+- [QuaRot](https://github.com/spcl/QuaRot)
+- [SpinQuant](https://github.com/facebookresearch/SpinQuant)

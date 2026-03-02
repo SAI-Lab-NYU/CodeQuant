@@ -86,7 +86,18 @@ modify the following configuration parameters:
 
 
 ## 📚Citation
-it will be published soon.
+If you find our work useful for your research, please consider citing our paper:
+
+```bibtex
+@inproceedings{
+    yin2026codequant,
+    title={CodeQuant: Unified Clustering and Quantization for Enhanced Outlier Smoothing in Low-Precision Mixture-of-Experts},
+    author={Xiangyang Yin and Xingyu Liu and Tianhua Xia and BO BAO and Vithursan Thangarasa and Valavan Manohararajah and Eric Sather and Sai Qian Zhang},
+    booktitle={The Fourteenth International Conference on Learning Representations},
+    year={2026},
+    url={https://openreview.net/forum?id=ATpchFiBQi}
+}
+```
 
 ## 🤝Contributing
 We thank the community for sharing their projects. Our project builds on top of the existing works:

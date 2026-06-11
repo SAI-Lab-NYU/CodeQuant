@@ -4,7 +4,12 @@
     International Conference on Learning Representations (ICLR), 2026
 </p>
 <p align="center">
-    <a href="https://openreview.net/forum?id=ATpchFiBQi">📄OpenReview</a>
+  <a href="https://arxiv.org/abs/2604.10496">
+    <img src="https://img.shields.io/badge/arXiv-2604.10496-b31b1b.svg">
+  </a>
+  <a href="https://openreview.net/forum?id=ATpchFiBQi">
+    <img src="https://img.shields.io/badge/OpenReview-Forum-8c1b13.svg">
+  </a>
 </p>
 
 This repository provides the official implementation of <strong>CodeQuant</strong>, a unified clustering and quantization framework for <strong>Mixture-of-Experts (MoE) Large Language Models (LLMs)</strong>, addressing activation outliers with fine-tuned rotation and robust clustering method, enabling efficient low-precision deployment.
